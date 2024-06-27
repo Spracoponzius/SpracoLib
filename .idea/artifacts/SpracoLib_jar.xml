@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SpracoLib:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SpracoLib_jar</output-path>
+    <root id="archive" name="SpracoLib.jar">
+      <element id="module-output" name="SpracoLib" />
+    </root>
+  </artifact>
+</component>
