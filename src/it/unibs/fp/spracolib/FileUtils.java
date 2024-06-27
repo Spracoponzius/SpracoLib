@@ -2,7 +2,7 @@ package it.unibs.fp.spracolib;
 import java.io.*;
 
 
-public class ServizioFile
+public class FileUtils
 {
 	private final static String MSG_NO_FILE = "ATTENZIONE: NON TROVO IL FILE ";
 	private final static String MSG_NO_LETTURA = "ATTENZIONE: PROBLEMI CON LA LETTURA DEL FILE ";

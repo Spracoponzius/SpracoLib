@@ -1,6 +1,6 @@
 package it.unibs.fp.spracolib;
 import java.util.*;
-public class InputDati 
+public class DataInput
 {
 	  private static Scanner lettore = creaScanner();
 	  

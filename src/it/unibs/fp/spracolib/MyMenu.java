@@ -24,7 +24,7 @@ public class MyMenu
   public int scegli ()
   {
 	stampaMenu();
-	return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);	 
+	return DataInput.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);
   }
 		
   public void stampaMenu ()

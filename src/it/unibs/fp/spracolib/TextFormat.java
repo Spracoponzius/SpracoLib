@@ -1,5 +1,5 @@
 package it.unibs.fp.spracolib;
-public class BelleStringhe
+public class TextFormat
 {
 
  private final static String SPAZIO = " ";
