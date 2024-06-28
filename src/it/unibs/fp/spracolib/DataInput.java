@@ -2,199 +2,218 @@ package it.unibs.fp.spracolib;
 import java.util.*;
 public class DataInput
 {
-	  private static Scanner lettore = creaScanner();
+	  private static Scanner reader = createScanner();
 	  
-	  private final static String ERRORE_FORMATO = "Attenzione: il dato inserito non e' nel formato corretto";
-	  private final static String ERRORE_MINIMO= "Attenzione: e' richiesto un valore maggiore o uguale a ";
-	  private final static String ERRORE_STRINGA_VUOTA= "Attenzione: non hai inserito alcun carattere";
-	  private final static String ERRORE_MASSIMO= "Attenzione: e' richiesto un valore minore o uguale a ";
-	  private final static String MESSAGGIO_AMMISSIBILI= "Attenzione: i caratteri ammissibili sono: ";
+	  private final static String FORMAT_ERROR = "Error: wrong format provided.";
+	  private final static String MINIMUM_ERROR = "Error: a value greater or equal than ";
+	  private final static String IS_REQUIRED_MSG = " is required.";
+	  private final static String ERROR_EMPTY_STRING = "Error: no characters inserted.";
+	  private final static String MAXIMUM_ERROR = "Error: a value inferior or equal than ";
+	  private final static String ALLOWED_CHARS_MSG = "Attention: the following characters are allowed: ";
 
-	  private final static char RISPOSTA_SI='S';
-	  private final static char RISPOSTA_NO='N';
+	  private final static char REPLY_YES ='Y';
+	  private final static char REPLY_NO ='N';
 
 	  
  
-	  private static Scanner creaScanner ()
+	  private static Scanner createScanner()
 	  {
-	   Scanner creato = new Scanner(System.in);
-	   creato.useDelimiter(System.getProperty("line.separator"));
-	   return creato;
+	   Scanner created = new Scanner(System.in);
+	   created.useDelimiter(System.getProperty("line.separator"));
+	   return created;
 	  }
 	  
-	  public static String leggiStringa (String messaggio)
+	  public static String readString(String message)
 	  {
-		  System.out.print(messaggio);
-		  return lettore.next();
+		  System.out.print(message);
+		  return reader.next();
 	  }
 	  
-	  public static String leggiStringaNonVuota(String messaggio)
+	  public static String readNonEmptyString(String message)
 	  {
-	   boolean finito=false;
-	   String lettura = null;
+	   boolean finished=false;
+	   String read = null;
 	   do
 	   {
-		 lettura = leggiStringa(messaggio);
-		 lettura = lettura.trim();
-		 if (lettura.length() > 0)
-		  finito=true;
+		 read = readString(message);
+		 read = read.trim();
+		 if (read.length() > 0)
+		  finished=true;
 		 else
-		  System.out.println(ERRORE_STRINGA_VUOTA);
-	   } while (!finito);
+		  System.out.println(ERROR_EMPTY_STRING);
+	   } while (!finished);
 	   
-	   return lettura;
+	   return read;
 	  }
 	  
-	  public static char leggiChar (String messaggio)
+	  public static char readChar(String message)
 	  {
-	   boolean finito = false;
-	   char valoreLetto = '\0';
+	   boolean finished = false;
+	   char readValue = '\0';
 	   do
 	    {
-	     System.out.print(messaggio);
-	     String lettura = lettore.next();
-	     if (lettura.length() > 0)
+	     System.out.print(message);
+	     String read = reader.next();
+	     if (read.length() > 0)
 	      {
-	       valoreLetto = lettura.charAt(0);
-	       finito = true;
+	       readValue = read.charAt(0);
+	       finished = true;
 	      }
 	     else
 	      {
-	       System.out.println(ERRORE_STRINGA_VUOTA);
+	       System.out.println(ERROR_EMPTY_STRING);
 	      }
-	    } while (!finito);
-	   return valoreLetto;
+	    } while (!finished);
+	   return readValue;
 	  }
 	  
-	  public static char leggiUpperChar (String messaggio, String ammissibili)
+	  public static char readUpperChar(String message, String allowed)
 	  {
-	   boolean finito = false;
-	   char valoreLetto = '\0';
+	   boolean finished = false;
+	   char readValue = '\0';
 	   do
 	   {
-	    valoreLetto = leggiChar(messaggio);
-	    valoreLetto = Character.toUpperCase(valoreLetto);
-	    if (ammissibili.indexOf(valoreLetto) != -1)
-		 finito  = true;
+	    readValue = readChar(message);
+	    readValue = Character.toUpperCase(readValue);
+	    if (allowed.indexOf(readValue) != -1)
+		 finished  = true;
 	    else
-	     System.out.println(MESSAGGIO_AMMISSIBILI + ammissibili);
-	   } while (!finito);
-	   return valoreLetto;
+	     System.out.println(ALLOWED_CHARS_MSG + allowed);
+	   } while (!finished);
+	   return readValue;
 	  }
 	  
 	  
-	  public static int leggiIntero (String messaggio)
+	  public static int readInteger(String message)
 	  {
-	   boolean finito = false;
-	   int valoreLetto = 0;
+	   boolean finished = false;
+	   int readValue = 0;
 	   do
 	    {
-	     System.out.print(messaggio);
+	     System.out.print(message);
 	     try
 	      {
-	       valoreLetto = lettore.nextInt();
-	       finito = true;
+	       readValue = reader.nextInt();
+	       finished = true;
 	      }
 	     catch (InputMismatchException e)
 	      {
-	       System.out.println(ERRORE_FORMATO);
-	       String daButtare = lettore.next();
+	       System.out.println(FORMAT_ERROR);
+	       String throwAway = reader.next();
 	      }
-	    } while (!finito);
-	   return valoreLetto;
+	    } while (!finished);
+	   return readValue;
 	  }
 
-	  public static int leggiInteroPositivo(String messaggio)
+	  public static int readPositiveInteger(String message)
 	  {
-		  return leggiInteroConMinimo(messaggio,1);
+		  return readIntegerWithMinimum(message,1);
 	  }
 	  
-	  public static int leggiInteroNonNegativo(String messaggio)
+	  public static int readNonNegativeInteger(String message)
 	  {
-		  return leggiInteroConMinimo(messaggio,0);
+		  return readIntegerWithMinimum(message,0);
 	  }
 	  
 	  
-	  public static int leggiInteroConMinimo(String messaggio, int minimo)
+	  public static int readIntegerWithMinimum(String message, int minimum)
 	  {
-	   boolean finito = false;
-	   int valoreLetto = 0;
+	   boolean finished = false;
+	   int readValue = 0;
 	   do
 	    {
-	     valoreLetto = leggiIntero(messaggio);
-	     if (valoreLetto >= minimo)
-	      finito = true;
+	     readValue = readInteger(message);
+	     if (readValue >= minimum)
+	      finished = true;
 	     else
-	      System.out.println(ERRORE_MINIMO + minimo);
-	    } while (!finito);
+	      System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
+	    } while (!finished);
 	     
-	   return valoreLetto;
+	   return readValue;
 	  }
 
-	  public static int leggiIntero(String messaggio, int minimo, int massimo)
+	  public static int readInteger(String message, int minimum, int maximum)
 	  {
-	   boolean finito = false;
-	   int valoreLetto = 0;
+	   boolean finished = false;
+	   int readValue = 0;
 	   do
 	    {
-	     valoreLetto = leggiIntero(messaggio);
-	     if (valoreLetto >= minimo && valoreLetto<= massimo)
-	      finito = true;
+	     readValue = readInteger(message);
+	     if (readValue >= minimum && readValue<= maximum)
+	      finished = true;
 	     else
-	      if (valoreLetto < minimo)
-	         System.out.println(ERRORE_MINIMO + minimo);
+	      if (readValue < minimum)
+	         System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
 	      else
-	    	 System.out.println(ERRORE_MASSIMO + massimo); 
-	    } while (!finito);
+	    	 System.out.println(MAXIMUM_ERROR + maximum + IS_REQUIRED_MSG);
+	    } while (!finished);
 	     
-	   return valoreLetto;
+	   return readValue;
 	  }
 
 	  
-	  public static double leggiDouble (String messaggio)
+	  public static double readDouble(String message)
 	  {
-	   boolean finito = false;
-	   double valoreLetto = 0;
+	   boolean finished = false;
+	   double readValue = 0;
 	   do
 	    {
-	     System.out.print(messaggio);
+	     System.out.print(message);
 	     try
 	      {
-	       valoreLetto = lettore.nextDouble();
-	       finito = true;
+	       readValue = reader.nextDouble();
+	       finished = true;
 	      }
 	     catch (InputMismatchException e)
 	      {
-	       System.out.println(ERRORE_FORMATO);
-	       String daButtare = lettore.next();
+	       System.out.println(FORMAT_ERROR);
+	       String throwAway = reader.next();
 	      }
-	    } while (!finito);
-	   return valoreLetto;
+	    } while (!finished);
+	   return readValue;
 	  }
 	 
-	  public static double leggiDoubleConMinimo (String messaggio, double minimo)
+	  public static double readDoubleWithMinimum(String message, double minimum)
 	  {
-	   boolean finito = false;
-	   double valoreLetto = 0;
+	   boolean finished = false;
+	   double readValue = 0;
 	   do
 	    {
-	     valoreLetto = leggiDouble(messaggio);
-	     if (valoreLetto >= minimo)
-	      finito = true;
+	     readValue = readDouble(message);
+	     if (readValue >= minimum)
+	      finished = true;
 	     else
-	      System.out.println(ERRORE_MINIMO + minimo);
-	    } while (!finito);
+	      System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
+	    } while (!finished);
 	     
-	   return valoreLetto;
+	   return readValue;
+	  }
+
+	  public static double readDoubleWithRange(String message, double minimum, double maximum){
+		  boolean finished = false;
+		  double readValue = 0;
+		  do
+		  {
+			  readValue = readDouble(message);
+			  if (readValue >= minimum && readValue<= maximum)
+				  finished = true;
+			  else
+			  if (readValue < minimum)
+				  System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
+			  else
+				  System.out.println(MAXIMUM_ERROR + maximum + IS_REQUIRED_MSG);
+		  } while (!finished);
+
+		  return readValue;
 	  }
 
 	  
-	  public static boolean yesOrNo(String messaggio)
+	  public static boolean yesOrNo(String message)
 	  {
-		  String mioMessaggio = messaggio + "("+RISPOSTA_SI+"/"+RISPOSTA_NO+")";
-		  char valoreLetto = leggiUpperChar(mioMessaggio,String.valueOf(RISPOSTA_SI)+String.valueOf(RISPOSTA_NO));
+		  String myMessage = message + "("+ REPLY_YES +"/"+ REPLY_NO +")";
+		  char readValue = readUpperChar(myMessage,String.valueOf(REPLY_YES)+String.valueOf(REPLY_NO));
 		  
-		  if (valoreLetto == RISPOSTA_SI)
+		  if (readValue == REPLY_YES)
 			return true;
 		  else
 			return false;

@@ -1,9 +1,7 @@
 package it.unibs.fp.spracolib;
 /*
-Questa classe rappresenta un menu testuale generico a piu' voci
-Si suppone che la voce per uscire sia sempre associata alla scelta 0 
-e sia presentata in fondo al menu
-
+This class represents a generic text menu with mutiple entries.
+The exit entry is generated at the bottom and it is accessed using 0.
 */
 public class MyMenu
 {
@@ -24,7 +22,7 @@ public class MyMenu
   public int scegli ()
   {
 	stampaMenu();
-	return DataInput.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);
+	return DataInput.readInteger(RICHIESTA_INSERIMENTO, 0, voci.length);
   }
 		
   public void stampaMenu ()
