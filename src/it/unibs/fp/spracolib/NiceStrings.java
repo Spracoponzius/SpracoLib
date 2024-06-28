@@ -2,73 +2,91 @@ package it.unibs.fp.spracolib;
 public class NiceStrings
 {
 
- private final static String SPAZIO = " ";
- private final static String CORNICE = "---------------------------------------------------";
- private final static String ACAPO = "\n";
+ private final static String WHITESPACE = " ";
+ private final static char HORIZONTAL_FRAME = '-';
+ private final static char VERTICAL_FRAME = '|';
+ private final static String NEWLINE = "\n";
 
+	/**
+	 * Frames a string with dashes at the top and bottom
+	 * TO TEST
+	 * @param s
+	 * @return the provided string, framed
+	 */
+	public static String frame(String s, int width)
+	{
+		String horizontalFrame = NiceStrings.repeatChar(HORIZONTAL_FRAME,width);
+		StringBuffer res = new StringBuffer();
+		res.append(horizontalFrame);
 
-
- public static String incornicia (String s)
-	{ 
-	 StringBuffer res = new StringBuffer();
-		
-	 res.append(CORNICE+ACAPO);
-	 res.append(s+ACAPO);
-	 res.append(CORNICE+ACAPO);
-
- 	 return res.toString();
+		res.append(VERTICAL_FRAME);
+		res.append(NiceStrings.center(s,width));
+		res.append(VERTICAL_FRAME);
+		res.append(NiceStrings.isolatedLine(horizontalFrame));
+		return res.toString();
 
   }
 
  
- public static String incolonna (String s, int larghezza)
+ public static String incolumn(String s, int width)
 	{
-	 StringBuffer res = new StringBuffer(larghezza);
-	 int numCharDaStampare = Math.min(larghezza,s.length());
+	 StringBuffer res = new StringBuffer(width);
+	 int numCharDaStampare = Math.min(width,s.length());
 	 res.append(s.substring(0, numCharDaStampare));
-	 for (int i=s.length()+1; i<=larghezza; i++)
-		res.append(SPAZIO);
+	 for (int i=s.length()+1; i<=width; i++)
+		res.append(WHITESPACE);
 	 return res.toString();
 	}
-	
- public static String centrata (String s, int larghezza)
+
+ public static String center(String s, int width)
 	{
-	 StringBuffer res = new StringBuffer(larghezza);
-	 if (larghezza <= s.length())
-		res.append(s.substring(larghezza));
+	 StringBuffer res = new StringBuffer(width);
+	 if (width <= s.length())
+		res.append(s.substring(width));
 	 else
 		{
-		 int spaziPrima = (larghezza - s.length())/2;
-		 int spaziDopo = larghezza - spaziPrima - s.length();
+		 int spaziPrima = (width - s.length())/2;
+		 int spaziDopo = width - spaziPrima - s.length();
 		 for (int i=1; i<=spaziPrima; i++)
-			res.append(SPAZIO);
+			res.append(WHITESPACE);
 			
 		 res.append(s);
 		
 		 for (int i=1; i<=spaziDopo; i++)
-			res.append(SPAZIO);
+			res.append(WHITESPACE);
 		}
 	 	 return res.toString();
 
 	}
 
-	public static String ripetiChar (char elemento, int larghezza)
+	/**
+	 *
+	 * @param element char to repeat
+	 * @param width number of times to repeat
+	 * @return a string with the character repeated the times specified in width
+	 */
+	public static String repeatChar(char element, int width)
 	 {
-		 StringBuffer result = new StringBuffer(larghezza);
-		 for (int i = 0; i < larghezza; i++)
+		 StringBuffer result = new StringBuffer(width);
+		 for (int i = 0; i < width; i++)
 			{
-			 result.append(elemento);
+			 result.append(element);
 			}
 		 return result.toString();
 
 	 }
 
-	public static String rigaIsolata(String daIsolare)
+	/**
+	 * Returns the provided string separated at the beginning and at the end by two newline characters.
+	 * @param toIsolate
+	 * @return the isolated String
+	 */
+	public static String isolatedLine(String toIsolate)
 	 {
 		 StringBuffer result = new StringBuffer();
-		 result.append(ACAPO);
-		 result.append(daIsolare);
-		 result.append(ACAPO);
+		 result.append(NEWLINE);
+		 result.append(toIsolate);
+		 result.append(NEWLINE);
 		 return result.toString();
 	 }
  

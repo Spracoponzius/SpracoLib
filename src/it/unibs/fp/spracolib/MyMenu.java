@@ -5,37 +5,37 @@ The exit entry is generated at the bottom and it is accessed using 0.
 */
 public class MyMenu
 {
-  final private static String CORNICE = "--------------------------------";
-  final private static String VOCE_USCITA = "0\tEsci";
-  final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
+  final private static String FRAME = "--------------------------------";
+  final private static String EXIT_ENTRY = "0\tExit";
+  final private static String INSERT_MSG = "Type the number of the desired entry > ";
 
-  private String titolo;
-  private String [] voci;
+  private String title;
+  private String [] entries;
 
 	
-  public MyMenu (String titolo, String [] voci)
+  public MyMenu (String title, String [] entries)
   {
-	this.titolo = titolo;
-	this.voci = voci;
+	this.title = title;
+	this.entries = entries;
   }
 
-  public int scegli ()
+  public int choose()
   {
-	stampaMenu();
-	return DataInput.readInteger(RICHIESTA_INSERIMENTO, 0, voci.length);
+	printMenu();
+	return DataInput.readInteger(INSERT_MSG, 0, entries.length);
   }
 		
-  public void stampaMenu ()
+  public void printMenu()
   {
-	System.out.println(CORNICE);
-	System.out.println(titolo);
-	System.out.println(CORNICE);
-    for (int i=0; i<voci.length; i++)
+	System.out.println(FRAME);
+	System.out.println(title);
+	System.out.println(FRAME);
+    for (int i = 0; i< entries.length; i++)
 	 {
-	  System.out.println( (i+1) + "\t" + voci[i]);
+	  System.out.println( (i+1) + "\t" + entries[i]);
 	 }
     System.out.println();
-	System.out.println(VOCE_USCITA);
+	System.out.println(EXIT_ENTRY);
     System.out.println();
   }
 		
