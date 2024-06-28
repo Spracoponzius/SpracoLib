@@ -3,8 +3,7 @@ public class NiceStrings
 {
 
  private final static String WHITESPACE = " ";
- private final static char HORIZONTAL_FRAME = '-';
- private final static char VERTICAL_FRAME = '|';
+ private final static String FRAME = "---------------------------------------------------";
  private final static String NEWLINE = "\n";
 
 	/**
@@ -15,14 +14,12 @@ public class NiceStrings
 	 */
 	public static String frame(String s, int width)
 	{
-		String horizontalFrame = NiceStrings.repeatChar(HORIZONTAL_FRAME,width);
 		StringBuffer res = new StringBuffer();
-		res.append(horizontalFrame);
 
-		res.append(VERTICAL_FRAME);
-		res.append(NiceStrings.center(s,width));
-		res.append(VERTICAL_FRAME);
-		res.append(NiceStrings.isolatedLine(horizontalFrame));
+		res.append(FRAME+NEWLINE);
+		res.append(s+NEWLINE);
+		res.append(FRAME+NEWLINE);
+
 		return res.toString();
 
   }
