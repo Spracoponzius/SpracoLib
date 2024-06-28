@@ -1,4 +1,6 @@
 package it.unibs.fp.spracolib;
+import jdk.jshell.spi.ExecutionControl;
+
 import java.util.*;
 public class DataInput
 {
@@ -40,7 +42,7 @@ public class DataInput
 		 if (read.length() > 0)
 		  finished=true;
 		 else
-		  System.out.println(ERROR_EMPTY_STRING);
+		  System.out.println(String.format("%s%s"+ERROR_EMPTY_STRING+"%s",TermColors.SLOW_BLINK,TermColors.RED,TermColors.RESET));
 	   } while (!finished);
 	   
 	   return read;
@@ -61,7 +63,7 @@ public class DataInput
 	      }
 	     else
 	      {
-	       System.out.println(ERROR_EMPTY_STRING);
+			  System.out.println(String.format("%s%s"+ERROR_EMPTY_STRING+"%s",TermColors.SLOW_BLINK,TermColors.RED,TermColors.RESET));
 	      }
 	    } while (!finished);
 	   return readValue;
@@ -78,7 +80,7 @@ public class DataInput
 	    if (allowed.indexOf(readValue) != -1)
 		 finished  = true;
 	    else
-	     System.out.println(ALLOWED_CHARS_MSG + allowed);
+	     System.out.println(TermColors.RED + ALLOWED_CHARS_MSG + allowed + TermColors.RESET);
 	   } while (!finished);
 	   return readValue;
 	  }
@@ -98,8 +100,8 @@ public class DataInput
 	      }
 	     catch (InputMismatchException e)
 	      {
-	       System.out.println(FORMAT_ERROR);
-	       String throwAway = reader.next();
+			  System.out.println(String.format("%s%s"+FORMAT_ERROR+"%s",TermColors.SLOW_BLINK,TermColors.RED,TermColors.RESET));
+			  String throwAway = reader.next();
 	      }
 	    } while (!finished);
 	   return readValue;
@@ -126,7 +128,7 @@ public class DataInput
 	     if (readValue >= minimum)
 	      finished = true;
 	     else
-	      System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
+	      System.out.println(TermColors.RED + MINIMUM_ERROR + minimum + IS_REQUIRED_MSG + TermColors.RESET);
 	    } while (!finished);
 	     
 	   return readValue;
@@ -143,9 +145,9 @@ public class DataInput
 	      finished = true;
 	     else
 	      if (readValue < minimum)
-	         System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
+	         System.out.println(TermColors.RED + MINIMUM_ERROR + minimum + IS_REQUIRED_MSG + TermColors.RESET);
 	      else
-	    	 System.out.println(MAXIMUM_ERROR + maximum + IS_REQUIRED_MSG);
+	    	 System.out.println(TermColors.RED + MAXIMUM_ERROR + maximum + IS_REQUIRED_MSG + TermColors.RESET);
 	    } while (!finished);
 	     
 	   return readValue;
@@ -166,8 +168,8 @@ public class DataInput
 	      }
 	     catch (InputMismatchException e)
 	      {
-	       System.out.println(FORMAT_ERROR);
-	       String throwAway = reader.next();
+			  System.out.println(String.format("%s%s"+FORMAT_ERROR+"%s",TermColors.SLOW_BLINK,TermColors.RED,TermColors.RESET));
+			  String throwAway = reader.next();
 	      }
 	    } while (!finished);
 	   return readValue;
@@ -199,9 +201,9 @@ public class DataInput
 				  finished = true;
 			  else
 			  if (readValue < minimum)
-				  System.out.println(MINIMUM_ERROR + minimum + IS_REQUIRED_MSG);
+				  System.out.println(TermColors.RED + MINIMUM_ERROR + minimum + IS_REQUIRED_MSG + TermColors.RESET);
 			  else
-				  System.out.println(MAXIMUM_ERROR + maximum + IS_REQUIRED_MSG);
+				  System.out.println(TermColors.RED + MAXIMUM_ERROR + maximum + IS_REQUIRED_MSG + TermColors.RESET);
 		  } while (!finished);
 
 		  return readValue;
