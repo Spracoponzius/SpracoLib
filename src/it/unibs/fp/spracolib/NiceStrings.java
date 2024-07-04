@@ -12,7 +12,7 @@ public class NiceStrings
 	 * @param s
 	 * @return the provided string, framed
 	 */
-	public static String frame(String s, int width)
+	public static String frame(String s)
 	{
 		StringBuffer res = new StringBuffer();
 

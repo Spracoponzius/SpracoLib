@@ -1,91 +1,143 @@
 package it.unibs.fp.spracolib;
 import java.io.*;
+import java.util.Scanner;
 
 
 public class FileUtils
 {
-	private final static String MSG_NO_FILE = "ATTENZIONE: NON TROVO IL FILE ";
-	private final static String MSG_NO_LETTURA = "ATTENZIONE: PROBLEMI CON LA LETTURA DEL FILE ";
-	private final static String MSG_NO_SCRITTURA = "ATTENZIONE: PROBLEMI CON LA SCRITTURA DEL FILE ";
-	private final static String MSG_NO_CHIUSURA ="ATTENZIONE: PROBLEMI CON LA CHIUSURA DEL FILE ";
+	private final static String MSG_NO_FILE = "ERROR: FILE NOT FOUND: ";
+	private final static String MSG_READ_ERROR = "AN ERROR HAPPENED WHILE READING THE FILE ";
+	private final static String MSG_WRITE_ERROR = "AN ERROR HAPPENED WHILE WRITING ON THE FILE ";
+	private final static String MSG_CLOSING_ERROR ="AN ERROR HAPPENED WHILE CLOSING THE FILE ";
   	
-	public static Object caricaSingoloOggetto (File f)
+	public static Object loadSingleObject(File f)
 	 {
-		 Object letto = null;
-		 ObjectInputStream ingresso = null;
+		 Object read = null;
+		 ObjectInputStream input = null;
 			
 		 try
 			{
-			 ingresso = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
+			 input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
 				
-			 letto = ingresso.readObject();
+			 read = input.readObject();
 				
 			}
 		 catch (FileNotFoundException excNotFound)
 			{
 			 System.out.println(MSG_NO_FILE + f.getName() );
 			}
-		 catch (IOException excLettura)
+		 catch (IOException readExc)
 			{
-			 System.out.println(MSG_NO_LETTURA + f.getName() );
+			 System.out.println(MSG_READ_ERROR + f.getName() );
 			}
-		 catch (ClassNotFoundException excLettura)
+		 catch (ClassNotFoundException readExc)
 			{
-			 System.out.println(MSG_NO_LETTURA + f.getName() );
+			 System.out.println(MSG_READ_ERROR + f.getName() );
 			}
   	 finally
 			{
-			 if (ingresso != null)
+			 if (input != null)
 				{
 				 try 
 					{
-				   ingresso.close();
+				   input.close();
 					}
-				 catch (IOException excChiusura)
+				 catch (IOException closeExc)
 					{
-			 			System.out.println(MSG_NO_CHIUSURA + f.getName() );
+			 			System.out.println(MSG_CLOSING_ERROR + f.getName() );
 					}
 				}
 			} // finally
 
-		 return letto;
+		 return read;
 		  
-	 } // metodo caricaSingoloOggetto
+	 }
 	
 	
-	public static void salvaSingoloOggetto (File f, Object daSalvare)
-	 {
-		 ObjectOutputStream uscita = null;
-			
-		 try
-			{
-			 uscita = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-				
-			 uscita.writeObject(daSalvare);
-				
-			}
-		 catch (IOException excScrittura)
-			{
-			 System.out.println(MSG_NO_SCRITTURA + f.getName() );
-			}
-		 
-  	     finally
-			{
-			 if (uscita != null)
-				{
-				 try 
-				  {
-				   uscita.close();
-				  }
-				 catch (IOException excChiusura)
-					{
-			 			System.out.println(MSG_NO_CHIUSURA + f.getName() );
-					}
-				}
-			} // finally
+	public static void saveSingleObject(File f, Object toSave) {
+		ObjectOutputStream output = null;
 
-		 } // metodo salvaSingoloOggetto
-	
-	
+		try {
+			output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+
+			output.writeObject(toSave);
+
+		} catch (IOException writeExc) {
+			System.out.println(MSG_WRITE_ERROR + f.getName());
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException closeExc) {
+					System.out.println(TermColors.RED+MSG_CLOSING_ERROR+f.getName()+TermColors.RESET);
+				}
+			}
+		}
+
+	}
+
+	public static String readFromFile(String fileLocation){
+		File f = new File(fileLocation);
+		StringBuffer sb = new StringBuffer();
+		Scanner in = null;
+		try {
+			in = new Scanner(new FileReader(f));
+			while(in.hasNext()){
+				sb.append(in.nextLine());
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(TermColors.RED+MSG_READ_ERROR+f.getName()+TermColors.RESET);
+		}
+		finally{
+			if(in != null){
+				try{
+					in.close();
+				}catch(Exception e){
+					System.out.println(TermColors.RED+MSG_CLOSING_ERROR+f.getName()+TermColors.RESET);
+				}
+			}
+		}
+		return sb.toString();
+	}
+
+	public static void writeOnFileAppendMode(String fileLocation, String content){
+		File f = new File(fileLocation);
+		try {
+			PrintWriter pw = new PrintWriter(
+					new BufferedWriter(
+							new FileWriter(f, true)));
+			pw.append(content);
+			pw.close();
+		}
+		catch(IOException e){
+			System.out.println(TermColors.RED);
+			e.printStackTrace();
+			System.out.println(TermColors.RESET);
+		}
+	}
+	public static void writeOnFile(String fileLocation, String content){
+		File f = new File(fileLocation);
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(
+					new BufferedWriter(
+							new FileWriter(f, false)));
+			pw.append(content);
+		}
+		catch(IOException e){
+			System.out.println(TermColors.RED);
+			System.out.println(MSG_WRITE_ERROR + f.getName());
+			System.out.println(TermColors.RESET);
+		}
+		finally{
+			try{
+				if(pw!=null)
+					pw.close();
+			}catch(Exception e){
+				System.out.println(TermColors.RED+MSG_CLOSING_ERROR+f.getName()+TermColors.RESET);
+			}
+
+		}
+	}
 }
 

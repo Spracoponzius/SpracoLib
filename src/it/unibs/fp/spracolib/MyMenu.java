@@ -11,18 +11,25 @@ public class MyMenu
 
   private String title;
   private String [] entries;
+  private boolean exitEntry;
 
-	
-  public MyMenu (String title, String [] entries)
+
+  public MyMenu (String title, String [] entries, boolean exit)
   {
 	this.title = title;
 	this.entries = entries;
+    this.exitEntry = exit;
   }
 
   public int choose()
   {
 	printMenu();
-	return DataInput.readInteger(INSERT_MSG, 0, entries.length);
+    int choice;
+    if(exitEntry)
+        choice = DataInput.readInteger(INSERT_MSG, 0, entries.length);
+    else
+        choice = DataInput.readInteger(INSERT_MSG, 1, entries.length);
+	return choice;
   }
 		
   public void printMenu()
@@ -35,7 +42,8 @@ public class MyMenu
 	  System.out.println( (i+1) + "\t" + entries[i]);
 	 }
     System.out.println();
-	System.out.println(EXIT_ENTRY);
+    if(exitEntry)
+	    System.out.println(EXIT_ENTRY);
     System.out.println();
   }
 		
